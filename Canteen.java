@@ -6,19 +6,33 @@ public class Canteen {
         Map<String, Double> Menu = initMenu();
 
         // VARIABLES
-        String studentAns = "", orderAns = "";
+        String orderAns = "";
 
         // MAIN LOOP
         // while(orderAns != "N") {
             System.out.println("=====   MENU   =====");
+            int i = 1;
             for(var menu: Menu.entrySet()) {
-                System.out.printf("%-15s -$%.2f%n", menu.getKey(), menu.getValue());
+                System.out.printf(i +".%-15s - $%.2f%n", menu.getKey(), menu.getValue());
+                i++;
             }
+
+            Scanner input = new Scanner(System.in);
+            System.out.print("\nEnter item number: ");
+            int itemNum = input.nextInt(); 
+            System.out.print("Enter quantity: ");
+            int quantity = input.nextInt();
+            System.out.print("Are you a student? (Y/N): ");
+            String discount = input.nextLine().toUpperCase(); 
+
+
+
         // }
         
         
     }
 
+    // MENU INITIALIZER
     public static Map<String, Double> initMenu() {
         Map<String, Double> Menu = new LinkedHashMap<>();
         String[] items = {"Fried Chicken", "Spaghetti", "Steak", "Mashed Potato", "Omelette"};
@@ -27,5 +41,16 @@ public class Canteen {
             Menu.put(items[i], prices[i]);   
         }
         return Menu;
+    }
+
+    public static double getItemValue(int itemNum, Map<String, Double> Menu) {
+        switch(itemNum) {
+            case 1:
+                return Menu.get;
+        }
+    }
+
+    public static double computeSubTotal() {
+
     }
 }
