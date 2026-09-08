@@ -3,9 +3,19 @@ import java.util.*;
 public class Canteen {
     public static void main(String[] args) {
         // INITIALIZE MENU
-        initMenu();
+        Map<String, Double> Menu = initMenu();
 
-        System.out.println("=====   MENU   =====");
+        // VARIABLES
+        String studentAns = "", orderAns = "";
+
+        // MAIN LOOP
+        // while(orderAns != "N") {
+            System.out.println("=====   MENU   =====");
+            for(var menu: Menu.entrySet()) {
+                System.out.printf("%-15s -$%.2f%n", menu.getKey(), menu.getValue());
+            }
+        // }
+        
         
     }
 
