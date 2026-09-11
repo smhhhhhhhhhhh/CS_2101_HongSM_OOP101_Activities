@@ -7,10 +7,14 @@ public class Canteen {
 
         // VARIABLES
         String orderAns = "";
+        int totalItems = 0;
+        double totalSubTotal = 0.0;
+        double totalDiscount = 0.0;
+        double totalTotal = 0.0;
 
         // MAIN LOOP
-        // while(orderAns != "N") {
-            System.out.println("=====   MENU   =====");
+        while(!orderAns.equals("N")) {
+            System.out.println("\n=====   MENU   =====");
             int i = 1;
             for(var menu: Menu.entrySet()) {
                 System.out.printf(i +".%-15s - $%.2f%n", menu.getKey(), menu.getValue());
@@ -19,27 +23,63 @@ public class Canteen {
 
             Scanner input = new Scanner(System.in);
             
-            // INPUT ORDER
+            // ORDER INPUT
             System.out.print("\nEnter item number: ");
             int itemNum = input.nextInt(); 
 
             System.out.print("Enter quantity: ");
             int quantity = input.nextInt();
             input.nextLine();
+
+            // CHECK IF AT LEAST 1 OR AT MOST 10
+            if(quantity < 1) {
+                System.out.println("\nPlease order at least one quantity.");
+                continue;
+            }
+            else if(quantity > 10) {
+                System.out.println("\nYou cannot order more than 10 quantity.");
+                continue;
+            }
+
             double itemCost = getItemCost(itemNum, Menu); 
+
+            // VERIFY ORDER VALIDITY
+            if(itemCost == 0.0) {
+                System.out.println("Invalid order! Please enter a valid item and quantity.");
+                continue;
+            }
 
             System.out.print("Are you a student? (Y/N): ");
             String studentAns = input.nextLine().toUpperCase();
             Boolean isStudent = false;
-            if(studentAns == "Y") isStudent = true; 
+            if(studentAns.equals("Y")) isStudent = true; 
 
-            // OUTPUT ORDER
+            // ORDER OUTPUT
             double subTotal = computeSubTotal(itemCost, quantity);
             System.out.printf("\nSubtotal: " + "$%.2f%n", subTotal);
 
             double discount = computeDiscount(isStudent, subTotal);
             System.out.printf("Discount: " + "$%.2f%n", discount);
-        // }
+
+            double total = subTotal - discount;
+            System.out.printf("Order Total: " + "$%.2f%n", total);
+
+            // TOTAL TRACKER
+            totalItems+=quantity;
+            totalSubTotal+=subTotal;
+            totalDiscount+=discount;
+            totalTotal+=total;
+
+            // RELOOP
+            orderAns = "";
+            while(!orderAns.equals("Y") && !orderAns.equals("N")) {
+                System.out.print("\nDo you want to order again? (Y/N): ");
+                orderAns = input.nextLine().toUpperCase();
+            }
+        }
+
+        // ORDER SUMMARY
+        displaySummary(totalItems, totalSubTotal, totalDiscount, totalTotal);
     }
 
     // MENU INITIALIZER
@@ -67,7 +107,7 @@ public class Canteen {
             case 5:
                 return Menu.get("Omelette");
             default:
-                return 0.0;
+                return 0;
         }
     }
 
@@ -89,5 +129,15 @@ public class Canteen {
             return totalPurchase*0.05;
         }
         else return 0.0;
+    }
+
+    public static void displaySummary(int totalItems, double totalSubTotal,
+                                      double totalDiscount, double totalTotal) {
+        System.out.println("\n===== ORDER SUMMARY =====");
+        System.out.println("Total items: " + totalItems);
+        System.out.printf("Total before discount: " + "$%.2f%n", totalSubTotal);
+        System.out.printf("Total discount: " + "$%.2f%n", totalDiscount);
+        System.out.printf("Final amount: " + "$%.2f%n", totalTotal);
+        System.out.println("Thank you for ordering!");
     }
 }
