@@ -24,12 +24,14 @@ public class Canteen {
 
             System.out.print("Enter quantity: ");
             int quantity = input.nextInt();
+            input.nextLine();
             double itemCost = getItemCost(itemNum, Menu); 
 
             System.out.print("Are you a student? (Y/N): ");
             String discount = input.nextLine().toUpperCase(); 
 
-
+            double subTotal = computeSubTotal(itemCost, quantity);
+            System.out.printf("\nSubtotal: " + "$%.2f%n", subTotal);
         // }
     }
 
