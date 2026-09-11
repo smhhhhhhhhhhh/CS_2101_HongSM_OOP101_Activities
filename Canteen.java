@@ -28,8 +28,6 @@ public class Canteen {
 
 
         // }
-        
-        
     }
 
     // MENU INITIALIZER
@@ -46,7 +44,17 @@ public class Canteen {
     public static double getItemValue(int itemNum, Map<String, Double> Menu) {
         switch(itemNum) {
             case 1:
-                return Menu.get;
+                return Menu.get("Fried Chicken");
+            case 2:
+                return Menu.get("Spaghetti");
+            case 3:
+                return Menu.get("Steak");
+            case 4:
+                return Menu.get("Mashed Potato");
+            case 5:
+                return Menu.get("Omelette");
+            default:
+                return 0.0;
         }
     }
 
