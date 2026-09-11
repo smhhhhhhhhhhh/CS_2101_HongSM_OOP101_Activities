@@ -32,43 +32,49 @@ public class Canteen {
             input.nextLine();
 
             // CHECK IF AT LEAST 1 OR AT MOST 10
+            boolean validOrder = true;
             if(quantity < 1) {
                 System.out.println("\nPlease order at least one quantity.");
-                continue;
+                validOrder = false;
             }
             else if(quantity > 10) {
                 System.out.println("\nYou cannot order more than 10 quantity.");
-                continue;
+                validOrder = false;
             }
 
-            double itemCost = getItemCost(itemNum, Menu); 
 
             // VERIFY ORDER VALIDITY
-            if(itemCost == 0.0) {
-                System.out.println("Invalid order! Please enter a valid item and quantity.");
-                continue;
+            double itemCost = 0.0;
+            if(validOrder) {
+                itemCost = getItemCost(itemNum, Menu);
+                if(itemCost == 0.0) {
+                    System.out.println("Invalid order! Please enter a valid item and quantity.");
+                    validOrder = false;
+                }
             }
 
-            System.out.print("Are you a student? (Y/N): ");
-            String studentAns = input.nextLine().toUpperCase();
-            Boolean isStudent = false;
-            if(studentAns.equals("Y")) isStudent = true; 
+            if(validOrder) {
+                System.out.print("Are you a student? (Y/N): ");
+                String studentAns = input.nextLine().toUpperCase();
+                Boolean isStudent = false;
+                if(studentAns.equals("Y")) isStudent = true; 
 
-            // ORDER OUTPUT
-            double subTotal = computeSubTotal(itemCost, quantity);
-            System.out.printf("\nSubtotal: " + "$%.2f%n", subTotal);
+                // ORDER OUTPUT
+                double subTotal = computeSubTotal(itemCost, quantity);
+                System.out.printf("\nSubtotal: " + "$%.2f%n", subTotal);
 
-            double discount = computeDiscount(isStudent, subTotal);
-            System.out.printf("Discount: " + "$%.2f%n", discount);
+                double discount = computeDiscount(isStudent, subTotal);
+                System.out.printf("Discount: " + "$%.2f%n", discount);
 
-            double total = subTotal - discount;
-            System.out.printf("Order Total: " + "$%.2f%n", total);
+                double total = subTotal - discount;
+                System.out.printf("Order Total: " + "$%.2f%n", total);
 
-            // TOTAL TRACKER
-            totalItems+=quantity;
-            totalSubTotal+=subTotal;
-            totalDiscount+=discount;
-            totalTotal+=total;
+                // TOTAL TRACKER
+                totalItems+=quantity;
+                totalSubTotal+=subTotal;
+                totalDiscount+=discount;
+                totalTotal+=total;
+            }
 
             // RELOOP
             orderAns = "";
