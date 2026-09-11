@@ -19,6 +19,7 @@ public class Canteen {
 
             Scanner input = new Scanner(System.in);
             
+            // INPUT ORDER
             System.out.print("\nEnter item number: ");
             int itemNum = input.nextInt(); 
 
@@ -28,10 +29,16 @@ public class Canteen {
             double itemCost = getItemCost(itemNum, Menu); 
 
             System.out.print("Are you a student? (Y/N): ");
-            String discount = input.nextLine().toUpperCase(); 
+            String studentAns = input.nextLine().toUpperCase();
+            Boolean isStudent = false;
+            if(studentAns == "Y") isStudent = true; 
 
+            // OUTPUT ORDER
             double subTotal = computeSubTotal(itemCost, quantity);
             System.out.printf("\nSubtotal: " + "$%.2f%n", subTotal);
+
+            double discount = computeDiscount(isStudent, subTotal);
+            System.out.printf("Discount: " + "$%.2f%n", discount);
         // }
     }
 
@@ -68,5 +75,19 @@ public class Canteen {
     public static double computeSubTotal(double itemCost, int quantity) {
         double subTotal = itemCost*quantity;
         return subTotal;
+    }
+
+    // DISCOUNT COMPUTER
+    public static double computeDiscount(Boolean isStudent, double totalPurchase) {
+        if(isStudent && totalPurchase >= 500.0) {
+            return totalPurchase*0.15;
+        }
+        else if(isStudent)  {
+            return totalPurchase*0.10;
+        }
+        else if(totalPurchase >= 500.0) {
+            return totalPurchase*0.05;
+        }
+        else return 0.0;
     }
 }
