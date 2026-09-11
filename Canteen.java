@@ -18,13 +18,16 @@ public class Canteen {
             }
 
             Scanner input = new Scanner(System.in);
+            
             System.out.print("\nEnter item number: ");
             int itemNum = input.nextInt(); 
+
             System.out.print("Enter quantity: ");
             int quantity = input.nextInt();
+            double itemCost = getItemCost(itemNum, Menu); 
+
             System.out.print("Are you a student? (Y/N): ");
             String discount = input.nextLine().toUpperCase(); 
-
 
 
         // }
@@ -41,7 +44,8 @@ public class Canteen {
         return Menu;
     }
 
-    public static double getItemValue(int itemNum, Map<String, Double> Menu) {
+    // ITEM COST OBTAINER
+    public static double getItemCost(int itemNum, Map<String, Double> Menu) {
         switch(itemNum) {
             case 1:
                 return Menu.get("Fried Chicken");
@@ -58,7 +62,9 @@ public class Canteen {
         }
     }
 
-    public static double computeSubTotal() {
-
+    // SUBTOTAL COMPUTER
+    public static double computeSubTotal(double itemCost, int quantity) {
+        double subTotal = itemCost*quantity;
+        return subTotal;
     }
 }
